@@ -49,7 +49,10 @@ class Customer:
         totalSummary = "Total " + _toDollars(sum([t.amount for t in account.transactions]))
         return accountType + transactionSummary + totalSummary
 
+    def makeTransfer(self,amount,account_to,account_from):
+        deposit_to = account_to.deposit(amount)
+        withdraw_from = account_from.withdraw(amount)
+        return self.get_statement()
 
-
-def _toDollars(number):
-    return "${:1.2f}".format(number)
+    def _toDollars(number):
+        return "${:1.2f}".format(number)

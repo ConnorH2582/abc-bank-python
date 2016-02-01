@@ -30,7 +30,17 @@ def test_maxi_savings_account():
     bill = bank.addCustomer("Bill")
     bill_new_maxi = bill.openAccount('MAXI_SAVINGS')
     bill_new_maxi.deposit(3000.0)
-    assert_equals(bank.totalInterestPaid(), 170.0)
+
+def test_transfer():
+    bank = Bank()
+    bill = bank.addCustomer("Bill")
+    bill_savings = bill.openAccount('SAVINGS')
+    bill_checking = bill.openAccount('CHECKING')
+    bill_savings.deposit(200.0)
+    bill_checking.deposit(100.0)
+    bill.transfer(50.0,savings,checking)
+    assert_equals(bill_checking.balance,50.0)
+    assert_equals(bill_savings.balance,250.0)
 
 if __name__ == '__main__':
     test_customer_summary()

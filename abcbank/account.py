@@ -27,25 +27,24 @@ class Account:
         return sum([t.amount for t in self.transactions])
 
     def interestEarned(self):
-        default_interest = self.balance * 0.01
-        second_tier_interest = self.balance * 0.02
+        default_interest = self.balance * 0.001
+        second_tier_interest = self.balance * 0.002
         
         if self.accountType == 'CHECKING':
             return default_interest
 
         elif self.accountType == 'SAVINGS':
-            if self.balance <= 1000.0:
-                return default_interest
+            if self.balance <= 1000:
+                 return default_interest
             else:
-                return second_tier_interest
+                return 1 + (self.balance - 1000) * 0.002
 
         elif self.accountType == 'MAXI_SAVINGS':
-            if self.balance <= 1000.0:
+            if self.balance <= 1000:
                 return second_tier_interest
-            elif self.balance <= 2000.0:
-                return self.balance * 0.05
+            elif self.balance <= 2000:
+                return 20 + (self.balance - 1000) * 0.05
             else:
-                return self.balance * 0.1
-
+                return 70 + (self.balance - 2000) * 0.1
 
        

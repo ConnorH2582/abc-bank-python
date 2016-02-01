@@ -1,4 +1,4 @@
-from .customer import Customer
+from abcbank.customer import Customer
 
 class Bank:
     def __init__(self):

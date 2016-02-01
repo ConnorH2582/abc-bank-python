@@ -1,4 +1,4 @@
-from .account import Account
+from abcbank.account import Account
 
 
 class Customer:

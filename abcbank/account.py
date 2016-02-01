@@ -1,5 +1,4 @@
 from abcbank.transaction import Transaction
-import datetime
 from datetime import datetime, timedelta
 
 class Account:

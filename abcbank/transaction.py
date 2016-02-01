@@ -6,4 +6,4 @@ class Transaction:
         self.amount = amount
         self.transactionDate = datetime.now()
         self.action = action
-        
+

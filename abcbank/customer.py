@@ -44,7 +44,7 @@ class Customer:
             accountType = "\n\nSavings Account\n"
         if account.accountType == 'MAXI_SAVINGS':
             accountType = "\n\nMaxi Savings Account\n"
-        transactionSummary = [self.action + " " + _toDollars(abs(t.amount)) for t in account.transactions]
+        transactionSummary = [t.action + " " + _toDollars(t.amount) for t in account.transactions]
         transactionSummary = "  " + "\n  ".join(transactionSummary) + "\n"
         totalSummary = "Total " + _toDollars(sum([t.amount for t in account.transactions]))
         return accountType + transactionSummary + totalSummary
@@ -52,7 +52,8 @@ class Customer:
     def makeTransfer(self,amount,account_to,account_from):
         deposit_to = account_to.deposit(amount)
         withdraw_from = account_from.withdraw(amount)
-        return self.get_statement()
+        return self.getStatement()
 
-    def _toDollars(number):
-        return "${:1.2f}".format(number)
+def _toDollars(number):
+    return "${:1.2f}".format(number)
+

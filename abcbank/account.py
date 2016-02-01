@@ -1,10 +1,15 @@
 from abcbank.transaction import Transaction
+import datetime
+from datetime import datetime, timedelta
 
 class Account:
     def __init__(self, accountType):
         self.accountType = accountType
+        self.dateOpened = datetime.now()
         self.transactions = []
         self.balance = 0
+        self.account_age_in_days = (datetime.now() - self.dateOpened).days
+
 
     def deposit(self, amount):
         if not amount > 0:
@@ -27,26 +32,38 @@ class Account:
     def sumTransactions(self, checkAllTransactions=True):
         return sum([t.amount for t in self.transactions])
 
-    def interestEarned(self):
-        default_interest = self.balance * 0.001
-        
+    def dailyInterestRate(self):
+        default_interest = self.balance * 0.001 / 356
         if self.accountType == 'CHECKING':
-            return default_interest
+            interest = (default_interest)
 
         elif self.accountType == 'SAVINGS':
             if self.balance <= 1000:
-                 return default_interest
+                interest = default_interest
             else:
-                return 1 + (self.balance - 1000) * 0.002
+                interest = (1 + (self.balance - 1000) * 0.002) / 356 
 
         elif self.accountType == 'MAXI_SAVINGS':
-            recentWithdrawal = False
             for t in self.transactions:
-                if t.action == "withdrawal" and (datetime.now - t.transactionDate).days < 10:   
-                    recentWithdrawal = True
-            if recentWithdrawal:
-                return default_interest
-            else:
-                return self.balance * 0.05
+                if t.action == "withdrawal" and (datetime.now() - t.transactionDate).days < 10:   
+                    interest = default_interest
+                else:
+                    interest = self.balance * 0.05 / 356
+        return interest
+
+    def interestEarnedDaily(self):
+        interest = 0
+        if self.account_age_in_days > 0:
+            for day in range(self.account_age_in_days-1):
+                interest += self.dailyInterestRate()
+        return interest
+
+    def accrueInterest(self):
+        for day in range(self.account_age_in_days-1):
+            self.balance += self.accruedDailyInterest() * self.interestEarnedDaily
+        return self.balance
+
+
+
 
 

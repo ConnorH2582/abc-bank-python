@@ -52,14 +52,17 @@ class Account:
 
     def interestEarnedDaily(self):
         interest = 0
-        if self.account_age_in_days > 0:
-            for day in range(self.account_age_in_days-1):
+        if self.account_age_in_days == 0:
+            pass
+        else:
+            for day in range(1,self.account_age_in_days):
                 interest += self.dailyInterestRate()
         return interest
 
     def accrueInterest(self):
-        for day in range(self.account_age_in_days-1):
-            self.balance += self.accruedDailyInterest() * self.interestEarnedDaily
+        if self.account_age_in_days>0:
+            for day in range(self.account_age_in_days-1):
+                self.balance += self.accruedDailyInterest() * self.interestEarnedDaily()
         return self.balance
 
 

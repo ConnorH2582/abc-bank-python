@@ -19,7 +19,7 @@ class Customer:
         return len(self.accounts)
 
     def totalInterestEarned(self):
-        return sum([a.interestEarned() for a in self.accounts])
+        return sum([a.interestEarnedDaily() for a in self.accounts])
 
     def totalAssets(self):
         return "Total Assets: " + _toDollars(sum([a.balance for a in self.accounts]))
